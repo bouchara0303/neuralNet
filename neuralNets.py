@@ -1,15 +1,9 @@
-#Name: Austin Bouchard
-#Date: 12/7/2019
-#Class: CSCE 4613
-#Assignment: Homework 3 - Neural Networks
-
 import numpy as np
 import matplotlib.pyplot as plt
 from random import choice
 import matplotlib as mpl
 
 class Layer:
-
     """
     nodes - an int specifying the size of the layer
     """
@@ -66,7 +60,6 @@ class NeuralNet:
                 weightsNext = self.weights[o]
                 errorSignal.insert(0, NeuralNet.errorSignalHidden(weightsNext, errorSignal[0], layer.inputs))
 
-            # if np.sum(errorSignal[0]) <
             #Derivatives used to update bias and weights
             prevLayerOut = self.layers[m].outputs
             deltaBias = errorSignal[0]
@@ -94,25 +87,25 @@ class NeuralNet:
         for i in range(len(self.layers)):
             print(str(i) + " : " + str(self.layers[i].outputs))
 
-    #Sigmoid activation function (1 / 1 + e^-x) ------------- GOOD
+    #Sigmoid activation function (1 / 1 + e^-x)
     def sigmoid(x):
         #Avoid overflow from following operation
         x = np.array(x, dtype=np.float128)
         return 1 / (1 + np.exp(-x))
 
-    #Derivative of the sigmoid function w.r.t. weight (f(x)(1 - f(x))) -----GOOD
+    #Derivative of the sigmoid function w.r.t. weight (f(x)(1 - f(x)))
     def sigmoidDerWeight(x):
         return NeuralNet.sigmoid(x) * (1 - NeuralNet.sigmoid(x))
 
-    #Weights * inputs + bias (W*I + b) ------ GOOD
+    #Weights * inputs + bias (W*I + b)
     def weightedSum(weights, inputs, bias):
         return weights.dot(inputs.reshape(weights.shape[-1])).reshape(bias.shape) + bias
 
-    #Derivative of cost function w.r.t. activation output (O - E)------ GOOD
+    #Derivative of cost function w.r.t. activation output (O - E)
     def costDerActivation(output, expected):
         return output - expected.reshape(output.shape)
 
-    #Derivative of cost function w.r.t. input sum from last layer ((O - E) * f(x)(1 - f(x))) - error signal for last layer------ GOOD
+    #Derivative of cost function w.r.t. input sum from last layer ((O - E) * f(x)(1 - f(x))) - error signal for last layer
     def costDerWeightedSum(output, expected, inputs):
         temp = NeuralNet.costDerActivation(output, expected)
         return temp * NeuralNet.sigmoidDerWeight(inputs).reshape(temp.shape)
@@ -125,7 +118,7 @@ class NeuralNet:
 
 
 
-    #Get error signals for hidden layers------ GOOD
+    #Get error signals for hidden layers
     def errorSignalHidden(weightsNext, errorNext, inputs):
         return weightsNext.T.dot(errorNext) * NeuralNet.sigmoidDerWeight(inputs)
 
