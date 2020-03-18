@@ -5,7 +5,7 @@ import matplotlib as mpl
 
 class Layer:
     """
-    nodes - an int specifying the size of the layer
+    node - an int specifying the size of the layer
     """
     def __init__(self, node = 1):
         self.inputs = np.random.random_sample(node)
