@@ -1,0 +1,4 @@
+*.pdf
+*.zip
+__pycache__
+*.png
